@@ -7,7 +7,7 @@
     "start": "node dev-server.js",
     "dev": "nodemon dev-server.js",
     "build": "echo \"Build complete - ready for deployment\"",
-    "vercel-build": "echo \"Vercel build complete\"",
+    "vercel-build": "mkdir -p public && cp -r css js index.html public/",
     "test": "echo \"No tests specified\" && exit 0",
     "lint": "echo \"Add linting if needed\""
   },

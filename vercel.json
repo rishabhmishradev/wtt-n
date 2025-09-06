@@ -4,5 +4,6 @@
       "maxDuration": 30
     }
   },
-  "public": true
+  "buildCommand": "npm run vercel-build",
+  "outputDirectory": "public"
 }
