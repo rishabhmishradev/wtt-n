@@ -1,0 +1,8 @@
+{
+  "functions": {
+    "api/socket.js": {
+      "maxDuration": 30
+    }
+  },
+  "public": true
+}

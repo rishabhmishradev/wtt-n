@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watch Together - Sync YouTube with Friends</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎥</text></svg>">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">
+                <i class="fas fa-play-circle"></i>
+                Watch Together
+            </h1>
+            <div class="user-info">
+                <span class="username" id="current-username">Guest</span>
+                <button class="btn-secondary" id="change-username-btn">
+                    <i class="fas fa-user"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Room Controls -->
+            <div class="room-controls">
+                <div class="room-info">
+                    <div class="room-status">
+                        <span class="status-indicator" id="connection-status"></span>
+                        <span id="room-id">Not connected</span>
+                    </div>
+                    <div class="user-count">
+                        <i class="fas fa-users"></i>
+                        <span id="user-count">0</span> viewers
+                    </div>
+                </div>
+                <div class="room-actions">
+                    <button class="btn-primary" id="create-room-btn">
+                        <i class="fas fa-plus"></i>
+                        Create Room
+                    </button>
+                    <button class="btn-secondary" id="join-room-btn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Join Room
+                    </button>
+                    <button class="btn-danger" id="leave-room-btn" style="display: none;">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Leave Room
+                    </button>
+                </div>
+            </div>
+
+            <!-- Video Section -->
+            <div class="video-section">
+                <div class="video-container">
+                    <div class="video-placeholder" id="video-placeholder">
+                        <div class="placeholder-content">
+                            <i class="fas fa-video"></i>
+                            <h3>No video loaded</h3>
+                            <p>Paste a YouTube URL to get started</p>
+                        </div>
+                    </div>
+                    <div id="youtube-player" style="display: none;"></div>
+                </div>
+                
+                <!-- Video Controls -->
+                <div class="video-controls">
+                    <div class="url-input-group">
+                        <input 
+                            type="text" 
+                            id="video-url-input" 
+                            placeholder="Paste YouTube URL here..."
+                            class="url-input"
+                        >
+                        <button class="btn-primary" id="load-video-btn">
+                            <i class="fas fa-plus"></i>
+                            Load Video
+                        </button>
+                    </div>
+                    
+                    <div class="playback-controls">
+                        <button class="control-btn" id="play-pause-btn" disabled>
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <div class="progress-container">
+                            <input type="range" class="progress-bar" id="progress-bar" min="0" max="100" value="0" disabled>
+                            <div class="time-info">
+                                <span id="current-time">0:00</span>
+                                <span>/</span>
+                                <span id="duration">0:00</span>
+                            </div>
+                        </div>
+                        <div class="volume-controls">
+                            <button class="control-btn" id="mute-btn">
+                                <i class="fas fa-volume-up"></i>
+                            </button>
+                            <input type="range" class="volume-slider" id="volume-slider" min="0" max="100" value="50">
+                        </div>
+                        <button class="control-btn" id="fullscreen-btn">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Section -->
+            <div class="chat-section">
+                <div class="chat-header">
+                    <h3>
+                        <i class="fas fa-comments"></i>
+                        Chat
+                    </h3>
+                    <button class="btn-ghost" id="toggle-chat-btn">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                
+                <div class="chat-container" id="chat-container">
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="system-message">
+                            Welcome to Watch Together! Start chatting with your friends.
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input-container">
+                        <input 
+                            type="text" 
+                            id="chat-input" 
+                            placeholder="Type your message..."
+                            maxlength="500"
+                        >
+                        <button class="btn-primary" id="send-message-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modals -->
+    <!-- Username Modal -->
+    <div class="modal-overlay" id="username-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Set Your Username</h3>
+            </div>
+            <div class="modal-body">
+                <input 
+                    type="text" 
+                    id="username-input" 
+                    placeholder="Enter your username..."
+                    maxlength="20"
+                    class="modal-input"
+                >
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="cancel-username-btn">Cancel</button>
+                <button class="btn-primary" id="save-username-btn">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Join Room Modal -->
+    <div class="modal-overlay" id="join-room-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Join Room</h3>
+            </div>
+            <div class="modal-body">
+                <input 
+                    type="text" 
+                    id="room-id-input" 
+                    placeholder="Enter room ID..."
+                    maxlength="10"
+                    class="modal-input"
+                >
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="cancel-join-btn">Cancel</button>
+                <button class="btn-primary" id="confirm-join-btn">Join</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div class="loading-overlay" id="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+        <p>Connecting...</p>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.js"></script>
+    <script src="js/youtube-api.js"></script>
+    <script src="js/socket-client.js"></script>
+    <script src="js/ui-controls.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

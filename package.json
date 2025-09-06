@@ -1,0 +1,46 @@
+{
+  "name": "watch-together-app",
+  "version": "1.0.0",
+  "description": "A web app for watching YouTube videos synchronously with friends",
+  "main": "server.js",
+  "scripts": {
+    "start": "node dev-server.js",
+    "dev": "nodemon dev-server.js",
+    "build": "echo \"Build complete - ready for deployment\"",
+    "vercel-build": "echo \"Vercel build complete\"",
+    "test": "echo \"No tests specified\" && exit 0",
+    "lint": "echo \"Add linting if needed\""
+  },
+  "keywords": [
+    "youtube",
+    "watch-together",
+    "synchronization",
+    "websocket",
+    "socketio",
+    "video-sync",
+    "real-time",
+    "collaborative"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.7.5",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/watch-together-app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/watch-together-app/issues"
+  },
+  "homepage": "https://github.com/yourusername/watch-together-app#readme"
+}
